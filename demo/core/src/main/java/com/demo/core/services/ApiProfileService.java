@@ -11,15 +11,7 @@ import com.demo.core.exceptions.DemoException;
  *
  */
 public interface ApiProfileService {
-	/**
-	 * Gets the member profile.
-	 *
-	 * @param accesToken the acces token
-	 * @param profileId  the profile id
-	 * @param config     the config
-	 * @return the member profile
-	 * @throws USBankExecption
-	 */
+
 	public ProfileResponse getMemberProfile(RequestModel requestModel, String profileId, String IsDemo);
 
 }
