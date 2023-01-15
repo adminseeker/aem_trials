@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug author",
+            "projectName": "demo.core",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 30302
+        },
+        {
+            "type": "java",
+            "name": "Debug publish",
+            "projectName": "demo.core",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": 30303
+        }
+    ]
+}
