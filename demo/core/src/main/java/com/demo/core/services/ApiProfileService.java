@@ -15,3 +15,4 @@ public interface ApiProfileService {
 	public ProfileResponse getMemberProfile(RequestModel requestModel, String profileId, String IsDemo);
 
 }
+
