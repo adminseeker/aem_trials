@@ -1,6 +1,7 @@
 package com.demo.core.services.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,18 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 		final Gson gson = new Gson();
 		if (StringUtils.isNotBlank(response)) {
 			final ProfileResponse resObj = gson.fromJson(response, ProfileResponse.class);
+			return resObj;
+		}
+		return null;
+	}
+
+	@Override
+	public List<ProfileResponse> getAllMemberProfile(RequestModel requestModel,String isDemo) {
+		String endPointUrl = (config.getApiEndPointUrl()) + config.getApiGetProfilePath();
+		final String response = restService.makeGetWSCall(endPointUrl, null, getRequestHeaders(isDemo), requestModel);
+		final Gson gson = new Gson();
+		if (StringUtils.isNotBlank(response)) {
+			final List<ProfileResponse> resObj = gson.fromJson(response, List.class);
 			return resObj;
 		}
 		return null;

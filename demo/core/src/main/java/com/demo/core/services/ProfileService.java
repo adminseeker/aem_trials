@@ -1,6 +1,7 @@
 package com.demo.core.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.jcr.RepositoryException;
@@ -26,10 +27,8 @@ import com.demo.core.services.ApiProfileService;
 import com.demo.core.utils.CommonsUtil;
 
 /**
- * The Class MemberNetLoginService.
  * 
  * 
- * @author hkaur
  */
 @Component(service = ProfileService.class, immediate = true, property = { "process.label= Profile Service", Constants.SERVICE_DESCRIPTION + "=Demo - Profile Service", Constants.SERVICE_VENDOR + "=Demo",
 		Constants.SERVICE_RANKING + ":Integer=1001" })
@@ -69,6 +68,22 @@ public class ProfileService {
 			return CommonsUtil.getJsonFromObject(profile);
 		} else {
 			return CommonsUtil.getJsonFromObject(null);
+		}
+		
+	}
+
+	public List<ProfileResponse>  getProfileList(RequestModel requestModel) {
+		
+		
+		/*
+		 * Making getProfile List
+		 * 
+		 */
+		List<ProfileResponse> profiles = profileService.getAllMemberProfile(requestModel, requestModel.getIsDemo());
+		if(null != profiles ) {
+			return profiles;
+		} else {
+			return null;
 		}
 		
 	}
