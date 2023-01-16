@@ -1,13 +1,14 @@
 {
   "dependencies": {
-    "express": "^4.18.2"
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.3"
   },
   "name": "demo-backend",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "start": "/usr/bin/node index.js"
+    "start": "env-cmd -f ./config/dev.env node ./index.js"
   },
   "author": "",
   "license": "ISC",

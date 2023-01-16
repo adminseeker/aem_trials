@@ -10,7 +10,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 @ObjectClassDefinition(name = "API Rest Configurations", description = "API REST Configurations will Provides the End Ponit URl For all Service")
 public @interface ApiRestConfig {
 
-	@AttributeDefinition(name = "Agility Loyalty Public API Endpoint URL", description = "This holds the value of Agility Loyalty Public API endpoint", type = AttributeType.STRING)
+	@AttributeDefinition(name = "Public API Endpoint URL", description = "This holds the value of  Public API endpoint", type = AttributeType.STRING)
 	String apiEndPointUrl() default "http://localhost:3000";
 
 	@AttributeDefinition(name = "profiles", description = "This holds the rest path of profile", type = AttributeType.STRING)
