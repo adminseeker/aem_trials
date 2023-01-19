@@ -1,0 +1,15 @@
+<div data-sly-test="${wcmmode.edit}" data-emptytext="Profile Component" class="cq-placeholder"></div>
+<div>
+    <div class="profilelisting d-none">
+        <sly data-sly-include="profilelisting.html"></sly>
+     </div>
+     <div class="profiledetails d-none">
+        <sly data-sly-include="profiledetails.html"></sly>
+     </div>
+     <div class="addprofile d-none">
+        <sly data-sly-include="addprofile.html"></sly>
+     </div>
+</div>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
+    <sly data-sly-call="${clientLib.js @ categories='demo.homepage'}" />
+</sly>

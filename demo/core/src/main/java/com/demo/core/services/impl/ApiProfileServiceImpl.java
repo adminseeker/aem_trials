@@ -11,6 +11,7 @@ import org.osgi.service.component.annotations.Reference;
 import com.google.gson.Gson;
 import com.demo.core.bo.ProfileResponse;
 import com.demo.core.bo.RequestModel;
+import com.demo.core.bo.ResponseStatusMsg;
 import com.demo.core.services.ApiProfileService;
 import com.demo.core.services.RESTServiceFramework;
 import com.demo.core.services.impl.ApiRestConfigImpl;
@@ -43,6 +44,30 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 		final Gson gson = new Gson();
 		if (StringUtils.isNotBlank(response)) {
 			final List<ProfileResponse> resObj = gson.fromJson(response, List.class);
+			return resObj;
+		}
+		return null;
+	}
+
+	@Override
+	public ProfileResponse addMemberProfile(RequestModel requestModel, String requestBody ,String IsDemo){
+		String endPointUrl = (config.getApiEndPointUrl()) + config.getApiGetProfilePath();
+		final String response = restService.makePostWSCall(endPointUrl, requestBody, null, getRequestHeaders(IsDemo), requestModel);
+		final Gson gson = new Gson();
+		if (StringUtils.isNotBlank(response)) {
+			final ProfileResponse resObj = gson.fromJson(response,ProfileResponse.class);
+			return resObj;
+		}
+		return null;
+	}
+
+	@Override
+	public ResponseStatusMsg deleteMemberProfile(RequestModel requestModel, String profileId,String IsDemo) {
+		String endPointUrl = formEndPointUrl(profileId);
+		final String response = restService.makeDeleteWSCall(endPointUrl, getRequestHeaders(IsDemo) , requestModel);
+		final Gson gson = new Gson();
+		if (StringUtils.isNotBlank(response)) {
+			final ResponseStatusMsg resObj = gson.fromJson(response, ResponseStatusMsg.class);
 			return resObj;
 		}
 		return null;

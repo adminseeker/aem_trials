@@ -1,15 +1,13 @@
 <sly data-sly-use.urlModel="com.demo.core.models.UrlResolverModel"></sly>
 <div>
     <input type="hidden" value="${urlModel.shortUrl}" id="profiledetailsresourcepath" />
-    <h1>${properties.heading}</h1>
+    <h1>${properties.detailsHeading}</h1>
     <p>Name: <span id="name"></span></p>
     <p>Age: <span id="age"></span></p>
     <p>Date of Birth: <span id="dob"></span></p>
     <p>Title: <span id="title"></span></p>
     <p>Company: <span id="company"></span></p>
     <p>Job: <span id="job"></span></p>
+    <button class="btn btn-back">Back</button>
     <!-- <p>ResourcePath: ${urlModel.shortUrl}</p> -->
 </div>
-<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-    <sly data-sly-call="${clientLib.js @ categories='demo.homepage'}" />
-</sly>

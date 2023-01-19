@@ -45,6 +45,7 @@ app.post("/api/v1/profile",async (req,res)=>{
     try {
         const profile = new Profile(req.body);
         await profile.save();
+        console.log("hit post",profile)
         res.json(profile)
     } catch (error) {
         res.status(500).json({"msg":"server error"});
@@ -66,8 +67,8 @@ app.patch("/api/v1/profile/:id",async (req,res)=>{
 
 app.delete("/api/v1/profile/:id",async (req,res)=>{
     try {
-    const profile = await Profile.deleteOne({"id":req.params.id});
-    res.json({"msg":"Deleted Successfully","profile":profile})
+    const profile = await Profile.findByIdAndDelete(req.params.id);
+    res.json({"msg":"Deleted Successfully"})
     } catch (error) {
         res.status(500).json({"msg":"server error"});
         console.log(error)

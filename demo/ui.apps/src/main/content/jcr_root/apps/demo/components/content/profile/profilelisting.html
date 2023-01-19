@@ -2,11 +2,9 @@
 <sly data-sly-use.profileListingModel="com.demo.core.models.ProfileListingModel"></sly>
 <div>
     <input type="hidden" value="${urlModel.shortUrl}" id="profiledetailsresourcepath" />
-    <h1>${properties.heading}</h1>
+    <h1>${properties.listingHeading}</h1>
     <div data-sly-list.profile="${profileListingModel.profilesList}">
-        <p>Name: <a href='/content/demo/us/en/home/profiledetail.html?id=${profile._id}'>${profile.name}</a></p>
+        <p>Name: ${profile.name} <button class="btn btn-name" data-profileid="${profile._id}">View Details</button> <button class="btn btn-delete" data-profileid="${profile._id}">Delete</button></p> 
     </div>
+    <button class="btn btn-add">Add Profile</button>
 </div>
-<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html">
-    <sly data-sly-call="${clientLib.js @ categories='demo.homepage'}" />
-</sly>

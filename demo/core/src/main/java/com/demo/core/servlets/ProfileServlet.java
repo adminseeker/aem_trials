@@ -5,7 +5,9 @@ import com.day.cq.commons.jcr.JcrConstants;
 import com.demo.core.bo.ProfileResponse;
 import com.demo.core.bo.RequestModel;
 import com.demo.core.services.ProfileService;
+import com.google.gson.Gson;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
@@ -29,9 +31,9 @@ import java.io.IOException;
  */
 @Component(service = { Servlet.class })
 @SlingServletResourceTypes(
-        resourceTypes="demo/components/content/profiledetails",
-        methods=HttpConstants.METHOD_GET,
+        resourceTypes="demo/components/content/profile",
         selectors = "profile",
+        methods = {HttpConstants.METHOD_GET,HttpConstants.METHOD_POST,HttpConstants.METHOD_DELETE},
         extensions="json")
 @ServiceDescription("Simple Demo Servlet")
 public class ProfileServlet extends SlingAllMethodsServlet {
@@ -53,5 +55,28 @@ public class ProfileServlet extends SlingAllMethodsServlet {
         profileResp=profileService.getProfileDetails(req, resp,requestModel);
         resp.setContentType("application/json");
         resp.getWriter().write(profileResp);
+    }
+
+    @Override
+    protected void doPost(final SlingHttpServletRequest req,
+    final SlingHttpServletResponse resp) throws ServletException, IOException {
+        RequestModel requestModel = new RequestModel();
+        requestModel.setIsDemo(req.getHeader("isDemo"));
+        String profileResp=profileService.addProfile(req, resp, requestModel);
+        resp.setContentType("application/json");
+        resp.getWriter().write(profileResp);
+        
+    }
+
+    @Override
+    protected void doDelete(final SlingHttpServletRequest req,
+    final SlingHttpServletResponse resp) throws ServletException, IOException {
+        RequestModel requestModel = new RequestModel();
+        requestModel.setIsDemo(req.getHeader("isDemo"));
+        requestModel.setProfileId(req.getParameter("id"));
+        String profileResp=profileService.deleteProfile(req, resp, requestModel);
+        resp.setContentType("application/json");
+        resp.getWriter().write(profileResp);
+        
     }
 }

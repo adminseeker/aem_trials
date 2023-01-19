@@ -1,11 +1,13 @@
 package com.demo.core.services;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.jcr.RepositoryException;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import com.demo.core.bo.ProfileResponse;
 import com.demo.core.bo.RequestModel;
+import com.demo.core.bo.ResponseStatusMsg;
 import com.demo.core.services.ApiProfileService;
 import com.demo.core.utils.CommonsUtil;
 
@@ -39,7 +42,7 @@ public class ProfileService {
 
 	/** The login service. */
 	@Reference
-	private ApiProfileService profileService;
+	private ApiProfileService apiProfileService;
 
 
 
@@ -54,16 +57,16 @@ public class ProfileService {
 	protected void activate(final ComponentContext componentContext) throws RepositoryException, LoginException {
 		log.info(" Profile Login Service :: Activate Method");
 	}
-
-
-	public String getProfileDetails(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {
-		
-		
 		/*
 		 * Making getProfileById call
 		 * 
 		 */
-		ProfileResponse profile = profileService.getMemberProfile(requestModel,requestModel.getProfileId(),requestModel.getIsDemo());
+
+	public String getProfileDetails(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {
+		
+		
+		
+		ProfileResponse profile = apiProfileService.getMemberProfile(requestModel,requestModel.getProfileId(),requestModel.getIsDemo());
 		if(null != profile ) {
 			return CommonsUtil.getJsonFromObject(profile);
 		} else {
@@ -72,14 +75,14 @@ public class ProfileService {
 		
 	}
 
-	public List<ProfileResponse>  getProfileList(RequestModel requestModel) {
-		
-		
 		/*
-		 * Making getProfile List
+		 * Making getProfiles call
 		 * 
 		 */
-		List<ProfileResponse> profiles = profileService.getAllMemberProfile(requestModel, requestModel.getIsDemo());
+
+	public List<ProfileResponse>  getProfileList(RequestModel requestModel) {
+		
+		List<ProfileResponse> profiles = apiProfileService.getAllMemberProfile(requestModel, requestModel.getIsDemo());
 		if(null != profiles ) {
 			return profiles;
 		} else {
@@ -87,6 +90,53 @@ public class ProfileService {
 		}
 		
 	}
+
+		
+		/*
+		 * Making addProfile call
+		 * 
+		 */
+
+	
+	public String addProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {		
+		String profileResp = null;
+		try {
+
+			String body = IOUtils.toString(req.getReader());
+			ProfileResponse profile = apiProfileService.addMemberProfile(requestModel,body,requestModel.getIsDemo());
+		if(null != profile ) {
+			profileResp= CommonsUtil.getJsonFromObject(profile);
+		} else {
+			profileResp = CommonsUtil.getJsonFromObject(null);
+		} 
+		
+	}
+		catch (IOException e) {
+			e.printStackTrace();
+			profileResp = CommonsUtil.getJsonFromObject(null);
+
+		} 
+		return profileResp;
+		
+	} 
+
+	/*
+		 * delete getProfileById call
+		 * 
+		 */
+
+		 public String deleteProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {
+		
+		
+		
+			ResponseStatusMsg statusMsg = apiProfileService.deleteMemberProfile(requestModel,requestModel.getProfileId(),requestModel.getIsDemo());
+			if(null != statusMsg ) {
+				return CommonsUtil.getJsonFromObject(statusMsg);
+			} else {
+				return CommonsUtil.getJsonFromObject(null);
+			}
+			
+		}
 	
 
 }
