@@ -19,6 +19,6 @@ public interface ApiProfileService {
 	public List<ProfileResponse> getAllMemberProfile(RequestModel requestModel, String IsDemo);
 	public ProfileResponse addMemberProfile(RequestModel requestModel, String requestBody ,String IsDemo);
 	public ResponseStatusMsg deleteMemberProfile(RequestModel requestModel, String profileId, String IsDemo);
-
+	public ProfileResponse editMemberProfile(RequestModel requestModel, String requestBody ,String profileId, String IsDemo);
 }
 

@@ -73,6 +73,18 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 		return null;
 	}
 
+	@Override
+	public ProfileResponse editMemberProfile(RequestModel requestModel,String requestBody,String profileId,String IsDemo) {
+		String endPointUrl = formEndPointUrl(profileId);
+		final String response = restService.makePatchWSCall(endPointUrl, requestBody, null, getRequestHeaders(IsDemo), requestModel);
+		final Gson gson = new Gson();
+		if (StringUtils.isNotBlank(response)) {
+			final ProfileResponse resObj = gson.fromJson(response, ProfileResponse.class);
+			return resObj;
+		}
+		return null;
+	}
+
 	/**
 	 * Gets the reuest headers.
 	 *

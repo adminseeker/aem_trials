@@ -137,6 +137,33 @@ public class ProfileService {
 			}
 			
 		}
+
+		/*
+		 * edit getProfileById call
+		 * 
+		 */
+
+		public String editProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {		
+			String profileResp = null;
+			try {
+	
+				String body = IOUtils.toString(req.getReader());
+				ProfileResponse profile = apiProfileService.editMemberProfile(requestModel,body,requestModel.getProfileId(),requestModel.getIsDemo());
+			if(null != profile ) {
+				profileResp= CommonsUtil.getJsonFromObject(profile);
+			} else {
+				profileResp = CommonsUtil.getJsonFromObject(null);
+			} 
+			
+		}
+			catch (IOException e) {
+				e.printStackTrace();
+				profileResp = CommonsUtil.getJsonFromObject(null);
+	
+			} 
+			return profileResp;
+			
+		} 
 	
 
 }

@@ -33,7 +33,7 @@ import java.io.IOException;
 @SlingServletResourceTypes(
         resourceTypes="demo/components/content/profile",
         selectors = "profile",
-        methods = {HttpConstants.METHOD_GET,HttpConstants.METHOD_POST,HttpConstants.METHOD_DELETE},
+        methods = {HttpConstants.METHOD_GET,HttpConstants.METHOD_POST,HttpConstants.METHOD_DELETE,HttpConstants.METHOD_PUT},
         extensions="json")
 @ServiceDescription("Simple Demo Servlet")
 public class ProfileServlet extends SlingAllMethodsServlet {
@@ -75,6 +75,18 @@ public class ProfileServlet extends SlingAllMethodsServlet {
         requestModel.setIsDemo(req.getHeader("isDemo"));
         requestModel.setProfileId(req.getParameter("id"));
         String profileResp=profileService.deleteProfile(req, resp, requestModel);
+        resp.setContentType("application/json");
+        resp.getWriter().write(profileResp);
+        
+    }
+
+    @Override
+    protected void doPut(final SlingHttpServletRequest req,
+    final SlingHttpServletResponse resp) throws ServletException, IOException {
+        RequestModel requestModel = new RequestModel();
+        requestModel.setIsDemo(req.getHeader("isDemo"));
+        requestModel.setProfileId(req.getParameter("id"));
+        String profileResp=profileService.editProfile(req, resp, requestModel);
         resp.setContentType("application/json");
         resp.getWriter().write(profileResp);
         

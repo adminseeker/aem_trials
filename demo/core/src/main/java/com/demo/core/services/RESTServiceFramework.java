@@ -19,6 +19,8 @@ public interface RESTServiceFramework {
 
 	String makePutWSCall(String endPointUrl, String requestBody, Map<String, String> requestParams, Map<String, String> headers, RequestModel requestModel);
 
+	String makePatchWSCall(String endPointUrl, String requestBody, Map<String, String> requestParams, Map<String, String> headers, RequestModel requestModel);
+
 	String makeDeleteWSCall(String endPointUrl, Map<String, String> headers, RequestModel requestModel);
 
 }

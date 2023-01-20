@@ -21,6 +21,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -278,6 +279,56 @@ public class RESTServiceFrameworkImpl implements RESTServiceFramework {
 			log.error("IOException exception occured in makeDeleteWSCall...{}", exception);
 		} catch (final Exception e) {
 			log.error("Exception occured in makeDeleteWSCall method of RESTServiceFrameworkImpl:{} ", e);
+		}
+		return null;
+	}
+
+	@Override
+	public String makePatchWSCall(final String endPointUrl, final String requestBody, final Map<String, String> requestParams, final Map<String, String> headers, RequestModel requestModel) {
+		try (final CloseableHttpClient client = HttpClients.createDefault()) {
+			final long startTime = System.nanoTime();
+			final HttpPatch patch = new HttpPatch(endPointUrl);
+			if (null != headers && !headers.isEmpty()) {
+				for (final Entry<String, String> header : headers.entrySet()) {
+					patch.addHeader(header.getKey(), header.getValue());
+				}
+			}
+
+			log.debug("PATCH Endpoint : {}, request :  {} ", printUrl(endPointUrl), printUrl(requestBody));
+
+			if (StringUtils.isNotEmpty(requestBody)) {
+				final StringEntity stringEntity = new StringEntity(requestBody, ContentType.APPLICATION_JSON);
+				patch.setEntity(stringEntity);
+			} else if (null != requestParams && !requestParams.isEmpty()) {
+				final List<BasicNameValuePair> parametersBody = getParametersBody(requestParams);
+				patch.setEntity(new UrlEncodedFormEntity(parametersBody));
+			}
+			CloseableHttpResponse response = client.execute(patch);
+			int statusCode = response.getStatusLine().getStatusCode();
+			log.info("PUT Endpoint : {}, status code :  {} ", printUrl(endPointUrl), statusCode);
+			
+			if (statusCode == 204) {
+				return "{ \r\n" + "\"status\":\"success/nocontent\"\r\n" + "}";
+			}
+
+			if (response.getEntity() == null) {
+				return null;
+			}
+			final HttpEntity entity = response.getEntity();
+			final String resp = EntityUtils.toString(entity, "UTF-8");
+			final long endTime = System.nanoTime();
+			final long duration = endTime - startTime;
+			final double timeLapsedInSeconds = duration / 1000000000.0;
+			log.info("*********Execution time seconds for PATCH Endpoint : {} ******* {}", printUrl(endPointUrl), timeLapsedInSeconds);
+			log.debug("PUT Endpoint : {}, response :  {}", printUrl(endPointUrl), printUrl(resp));
+			return resp;
+
+		} catch (final SocketTimeoutException exception) {
+			log.error("SocketTimeoutException exception occured in makePatchWSCall...{}", exception);
+		} catch (final IOException exception) {
+			log.error("IOException exception occured in makePatchWSCall...{}", exception);
+		} catch (final Exception e) {
+			log.error("Exception occured in makePatchWSCall method of RESTServiceFrameworkImpl : {}", e);
 		}
 		return null;
 	}
