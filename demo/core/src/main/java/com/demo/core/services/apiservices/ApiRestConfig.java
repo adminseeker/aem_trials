@@ -1,4 +1,4 @@
-package com.demo.core.services;
+package com.demo.core.services.apiservices;
 
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;

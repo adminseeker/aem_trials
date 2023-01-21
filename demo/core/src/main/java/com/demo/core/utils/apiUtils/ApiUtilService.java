@@ -1,4 +1,4 @@
-package com.demo.core.utils;
+package com.demo.core.utils.apiUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,9 +9,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import com.demo.core.bo.RequestModel;
-import com.demo.core.services.RESTServiceFramework;
 import com.demo.core.exceptions.DemoException;
-import com.demo.core.services.impl.ApiRestConfigImpl;
+import com.demo.core.services.apiservices.RESTServiceFramework;
+import com.demo.core.services.apiservices.impl.ApiRestConfigImpl;
 import com.demo.core.utils.CommonsUtil;
 
 @Component(service = ApiUtilService.class, immediate = true, property = { "process.label= Api Util Service", Constants.SERVICE_DESCRIPTION + "=Demo - API Util Service", Constants.SERVICE_VENDOR + "=Demo",

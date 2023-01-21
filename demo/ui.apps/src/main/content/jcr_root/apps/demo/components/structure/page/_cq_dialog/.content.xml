@@ -31,16 +31,16 @@
                                                 fieldLabel="Client Library"
                                                 name="./pageClientlib">
                                                 <granite:data jcr:primaryType="nt:unstructured"/>
-                                                <items jcr:primaryType="nt:unstructured">                                                
+                                                <items jcr:primaryType="nt:unstructured">
                                                     <homepage
                                                         jcr:primaryType="nt:unstructured"
                                                         text="home page"
                                                         value="demo.homepage"/>
                                                 </items>
                                             </clientlib>
-                                           </items>
+                                        </items>
                                     </section>
-                                    </items>
+                                </items>
                             </column>
                         </items>
                     </clientlibtab>

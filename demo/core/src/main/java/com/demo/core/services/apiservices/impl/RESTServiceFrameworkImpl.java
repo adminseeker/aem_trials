@@ -1,4 +1,4 @@
-package com.demo.core.services.impl;
+package com.demo.core.services.apiservices.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -38,8 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.demo.core.bo.RequestModel;
-import com.demo.core.services.RESTServiceFramework;
-import com.demo.core.services.impl.ApiRestConfigImpl;
+import com.demo.core.services.apiservices.RESTServiceFramework;
 import com.demo.core.utils.CommonsUtil;
 
 @Component(immediate = true, service = RESTServiceFramework.class)

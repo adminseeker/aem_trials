@@ -1,4 +1,4 @@
-package com.demo.core.services;
+package com.demo.core.services.apiservices;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.demo.core.services.impl;
+package com.demo.core.services.apiservices.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +12,8 @@ import com.google.gson.Gson;
 import com.demo.core.bo.ProfileResponse;
 import com.demo.core.bo.RequestModel;
 import com.demo.core.bo.ResponseStatusMsg;
-import com.demo.core.services.ApiProfileService;
-import com.demo.core.services.RESTServiceFramework;
-import com.demo.core.services.impl.ApiRestConfigImpl;
+import com.demo.core.services.apiservices.ApiProfileService;
+import com.demo.core.services.apiservices.RESTServiceFramework;
 
 @Component(immediate = true, service = ApiProfileService.class)
 public class ApiProfileServiceImpl implements ApiProfileService {

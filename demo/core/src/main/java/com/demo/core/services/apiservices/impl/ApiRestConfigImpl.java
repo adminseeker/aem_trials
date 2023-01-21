@@ -1,10 +1,11 @@
-package com.demo.core.services.impl;
+package com.demo.core.services.apiservices.impl;
 
-import com.demo.core.services.ApiRestConfig;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.Designate;
+
+import com.demo.core.services.apiservices.ApiRestConfig;
 
 @Component(immediate = true, service = ApiRestConfigImpl.class, property = { "process.label=API REST Configurations",
 		Constants.SERVICE_DESCRIPTION + "=API REST Configurations End Ponit URl For all Service.", Constants.SERVICE_VENDOR + "=Demo" })

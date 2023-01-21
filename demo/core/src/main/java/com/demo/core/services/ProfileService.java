@@ -26,144 +26,28 @@ import org.slf4j.LoggerFactory;
 import com.demo.core.bo.ProfileResponse;
 import com.demo.core.bo.RequestModel;
 import com.demo.core.bo.ResponseStatusMsg;
-import com.demo.core.services.ApiProfileService;
+import com.demo.core.services.apiservices.ApiProfileService;
 import com.demo.core.utils.CommonsUtil;
 
 /**
  * 
  * 
  */
-@Component(service = ProfileService.class, immediate = true, property = { "process.label= Profile Service", Constants.SERVICE_DESCRIPTION + "=Demo - Profile Service", Constants.SERVICE_VENDOR + "=Demo",
-		Constants.SERVICE_RANKING + ":Integer=1001" })
-public class ProfileService {
+
+public interface ProfileService {
 
 	/** The Constant log. */
-	private static final Logger log = LoggerFactory.getLogger(ProfileService.class);
-
-	/** The login service. */
-	@Reference
-	private ApiProfileService apiProfileService;
 
 
 
-	/**
-	 * Activate.
-	 *
-	 * @param componentContext the component context
-	 * @throws RepositoryException the repository exception
-	 * @throws LoginException      the login exception
-	 */
-	@Activate
-	protected void activate(final ComponentContext componentContext) throws RepositoryException, LoginException {
-		log.info(" Profile Login Service :: Activate Method");
-	}
-		/*
-		 * Making getProfileById call
-		 * 
-		 */
+	public String getProfileDetails(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel);
 
-	public String getProfileDetails(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {
-		
-		
-		
-		ProfileResponse profile = apiProfileService.getMemberProfile(requestModel,requestModel.getProfileId(),requestModel.getIsDemo());
-		if(null != profile ) {
-			return CommonsUtil.getJsonFromObject(profile);
-		} else {
-			return CommonsUtil.getJsonFromObject(null);
-		}
-		
-	}
-
-		/*
-		 * Making getProfiles call
-		 * 
-		 */
-
-	public List<ProfileResponse>  getProfileList(RequestModel requestModel) {
-		
-		List<ProfileResponse> profiles = apiProfileService.getAllMemberProfile(requestModel, requestModel.getIsDemo());
-		if(null != profiles ) {
-			return profiles;
-		} else {
-			return null;
-		}
-		
-	}
-
-		
-		/*
-		 * Making addProfile call
-		 * 
-		 */
-
+	public List<ProfileResponse>  getProfileList(RequestModel requestModel) ;
 	
-	public String addProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {		
-		String profileResp = null;
-		try {
+	public String addProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel);
 
-			String body = IOUtils.toString(req.getReader());
-			ProfileResponse profile = apiProfileService.addMemberProfile(requestModel,body,requestModel.getIsDemo());
-		if(null != profile ) {
-			profileResp= CommonsUtil.getJsonFromObject(profile);
-		} else {
-			profileResp = CommonsUtil.getJsonFromObject(null);
-		} 
-		
-	}
-		catch (IOException e) {
-			e.printStackTrace();
-			profileResp = CommonsUtil.getJsonFromObject(null);
+	public String deleteProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel);
 
-		} 
-		return profileResp;
-		
-	} 
-
-	/*
-		 * delete getProfileById call
-		 * 
-		 */
-
-		 public String deleteProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {
-		
-		
-		
-			ResponseStatusMsg statusMsg = apiProfileService.deleteMemberProfile(requestModel,requestModel.getProfileId(),requestModel.getIsDemo());
-			if(null != statusMsg ) {
-				return CommonsUtil.getJsonFromObject(statusMsg);
-			} else {
-				return CommonsUtil.getJsonFromObject(null);
-			}
-			
-		}
-
-		/*
-		 * edit getProfileById call
-		 * 
-		 */
-
-		public String editProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel) {		
-			String profileResp = null;
-			try {
-	
-				String body = IOUtils.toString(req.getReader());
-				ProfileResponse profile = apiProfileService.editMemberProfile(requestModel,body,requestModel.getProfileId(),requestModel.getIsDemo());
-			if(null != profile ) {
-				profileResp= CommonsUtil.getJsonFromObject(profile);
-			} else {
-				profileResp = CommonsUtil.getJsonFromObject(null);
-			} 
-			
-		}
-			catch (IOException e) {
-				e.printStackTrace();
-				profileResp = CommonsUtil.getJsonFromObject(null);
-	
-			} 
-			return profileResp;
-			
-		} 
-	
+	public String editProfile(SlingHttpServletRequest req, SlingHttpServletResponse resp, RequestModel requestModel);	
 
 }
